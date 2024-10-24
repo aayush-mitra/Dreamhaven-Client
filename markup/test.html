@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D3 Pie Chart for Lucidity</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    svg {
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lucidity Pie Chart</h1>
+  <div id="chart"></div>
+
+  <script>
+    // The dream data (for demonstration)
+    const dreamData = [
+      {
+        "_id": "671a70ab485a8919de1a5355",
+        "dateString": "2024-10-24",
+        "lucidity": "Somewhat aware"
+      },
+      {
+        "_id": "671a7148485a8919de1a5378",
+        "dateString": "2024-10-25",
+        "lucidity": "Completely unaware"
+      },
+      {
+        "_id": "671a7158485a8919de1a5389",
+        "dateString": "2024-10-26",
+        "lucidity": "Highly lucid"
+      },
+      {
+        "_id": "671a7158485a8919de1a5389",
+        "dateString": "2024-10-27",
+        "lucidity": "Highly lucid"
+      }
+    ];
+
+    // Count frequency of each lucidity value
+    const lucidityFrequencies = {};
+    dreamData.forEach(dream => {
+      const lucidity = dream.lucidity || "No recollection"; // Handle empty/undefined lucidity
+      if (lucidityFrequencies[lucidity]) {
+        lucidityFrequencies[lucidity]++;
+      } else {
+        lucidityFrequencies[lucidity] = 1;
+      }
+    });
+
+    console.log(lucidityFrequencies); // Log the frequencies
+
+    // Prepare data for pie chart
+    const pieData = Object.entries(lucidityFrequencies).map(([key, value]) => ({
+      label: key,
+      value: value
+    }));
+
+    // D3 pie chart setup
+    const width = 450;
+    const height = 450;
+    const radius = Math.min(width, height) / 2;
+
+    const svg = d3.select("#chart")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .append("g")
+      .attr("transform", `translate(${width / 2}, ${height / 2})`);
+
+    const color = d3.scaleOrdinal()
+      .domain(pieData.map(d => d.label))
+      .range(d3.schemeSet2);
+
+    const pie = d3.pie()
+      .value(d => d.value);
+
+    const data_ready = pie(pieData);
+
+    const arc = d3.arc()
+      .innerRadius(0)
+      .outerRadius(radius);
+
+    svg
+      .selectAll('slices')
+      .data(data_ready)
+      .enter()
+      .append('path')
+      .attr('d', arc)
+      .attr('fill', d => color(d.data.label))
+      .style("opacity", 0.7);
+
+    // Add labels
+    svg
+      .selectAll('labels')
+      .data(data_ready)
+      .enter()
+      .append('text')
+      .text(d => d.data.label)
+      .attr("transform", d => `translate(${arc.centroid(d)})`)
+      .style("text-anchor", "middle")
+      .style("font-size", 12);
+  </script>
+</body>
+</html>

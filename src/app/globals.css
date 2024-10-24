@@ -43,8 +43,7 @@ body {
     justify-content: center;
     align-items: center;
     background-color: transparent;
-    position: sticky;
-    top: 0;
+    
     animation: load-header cubic-bezier(0.165, 0.84, 0.44, 1) 1s;
 }
 
@@ -460,8 +459,7 @@ body {
     justify-content: center;
     align-items: center;
     background-color: transparent;
-    position: sticky;
-    top: 0;
+    
     animation: load-header cubic-bezier(0.165, 0.84, 0.44, 1) 1s;
 }
 
@@ -631,8 +629,8 @@ body {
 }
 
 
-/* .dream-quiz {
-    height: 50%;
+.dream-quiz {
+    /* height: 50%;
     overflow-y: scroll;
     padding: 10px;
     color: white;    
@@ -642,10 +640,10 @@ body {
     justify-content: center;
     align-items: center;
     gap: 15px;
-    border-bottom: 1px solid var(--light-green);
+    border-bottom: 1px solid var(--light-green); */
     overflow-x: hidden;
 }
-    */
+    
 
 .dream-quiz h2 {
     margin-top: 90px;
@@ -662,11 +660,12 @@ body {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     gap: 10px;
+    overflow-x: hidden;
 }
 
 .dream-quiz .option {
     border: 1px solid var(--light-green);
-    width: 100px;
+    width: 160px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -675,6 +674,7 @@ body {
     border-radius: 10px;
     font-size: 0.9em;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .next-question {
@@ -873,4 +873,288 @@ body {
 
 .inner-tab.selected {
     background-color: #252525;
+}
+
+.options.text-in {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.options input {
+    justify-self: center;
+    text-align: center;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid var(--light-green);
+    outline: none;
+    font-family: "Fredoka", sans-serif;
+    font-size: 0.8em;
+    font-weight: 100;
+    color: white;
+    width: 90px;
+    background-color: transparent;
+    margin-bottom: 20px;
+}
+
+.FADE-OUT {
+    animation: f-OUT 1s;
+}
+
+.FADE-IN {
+    animation: f-IN 1s ;
+}
+
+@keyframes f-OUT {
+    0% {
+        opacity: 1
+    }
+
+    100% {
+        opacity: 0
+    }
+}
+
+@keyframes f-IN {
+    0% {
+        opacity: 0
+    }
+
+    100% {
+        opacity: 1
+    }
+}
+
+.green-bg {
+    background-color: var(--light-green) !important;
+
+
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid var(--light-green); /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+.insight-content {
+    text-align: center
+}
+
+.story-modal-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.story-modal {
+    z-index: 6;
+    width: 450px;
+    height: 400px;
+    background-color: #2d2d2d;
+    box-shadow: rgba(8, 255, 41, 0.24) 6px 6px 300px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    padding: 15px;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+.story-modal h2 {
+    font-weight: 100;
+    color: white;
+    font-size: 1.6em;
+}
+
+.story-modal button {
+    background-color: transparent;
+    color: white;
+    font-weight: 100;
+    font-size: 0.8em;
+}
+
+.story-modal .regenerate {
+    background-color: transparent;
+    color: white;
+    font-weight: 100;
+    font-size: 0.8em;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    border: none;
+    width: 25px;
+}
+
+.story-title {
+    width: 100%;
+    outline: none;
+    border: 1px solid var(--light-green);
+    background-color: transparent;
+    font-family: "Fredoka", sans-serif;
+    font-size: 1em;
+    padding: 5px;
+    border-radius: 5px;
+    resize: none;
+    color: white;
+    font-weight: 100;
+}
+
+.story-content {
+    flex: 1;
+    width: 100%;
+    outline: none;
+    border: 1px solid var(--light-green);
+    background-color: transparent;
+    font-family: "Fredoka", sans-serif;
+    font-size: 1em;
+    padding: 5px;
+    border-radius: 5px;
+    resize: none;
+    color: white;
+    font-weight: 100;
+}
+
+.close {
+    color: white;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+}
+
+.story-submit {
+    outline: none;
+    border: 1px solid var(--light-green);
+    background-color: transparent;
+    font-family: "Fredoka", sans-serif;
+    font-size: 1em;
+    padding: 5px;
+    border-radius: 5px;
+    resize: none;
+    color: white;
+    font-weight: 400;
+    width: 100%;
+    background-color: var(--light-green) !important;
+    cursor: pointer;
+}
+
+.stories-wrapper {
+    background-color: transparent;
+    height: calc(100vh - 100px);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stories-container {
+    height: 100%;
+    width: 60%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.story-card {
+    border: 1px solid var(--light-green);
+    height: 200px;
+    border-radius: 10px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.story-card:hover {
+    background-color: var(--primary-color);
+    transition: all 0.5s;
+}
+
+.story-card h3 {
+    font-weight: 100;
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.story-card h4 {
+    font-weight: 100;
+    
+}
+
+.story-card p {
+    font-size: 0.9em;
+}
+
+
+.story-page-modal-wrapper {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 20px;
+    padding: 50px;
+    color: white;
+    overflow-x: hidden;
+    /* animation: fadein cubic-bezier(0.165, 0.84, 0.44, 1) 1s; */
+}
+
+.story-page-modal-wrapper h1 {
+    font-size: 3em;
+    color: var(--light-green)
+}
+
+.story-page-modal-title {
+    font-weight: 100;
+    font-size: 1.2em;
+}
+
+.story-page-modal-content {
+    font-size: 2em;
+    width: 90%;
+}
+
+.story-page-modal-second {
+    font-size: 1.8em;
+    font-weight: 200;
+    margin-top: 30px;   
+}
+
+.story-page-modal-dream {
+    font-size: 1.6em;
+    width: 90%;
+    font-weight: 200;
+}
+
+.close-modal-wrapper {
+    position: absolute;
+    top: 25px;
+    cursor: pointer;
+    right: 25px;
 }
