@@ -257,6 +257,7 @@ body {
     padding: 0;
 }
 
+
 h1 {
     font-family: "Merienda", cursive;
     font-optical-sizing: auto;
@@ -630,7 +631,7 @@ body {
 }
 
 
-.dream-quiz {
+/* .dream-quiz {
     height: 50%;
     overflow-y: scroll;
     padding: 10px;
@@ -641,7 +642,13 @@ body {
     justify-content: center;
     align-items: center;
     gap: 15px;
-    border-bottom: 1px solid var(--light-green)
+    border-bottom: 1px solid var(--light-green);
+    overflow-x: hidden;
+}
+    */
+
+.dream-quiz h2 {
+    margin-top: 90px;
 }
 
 .dream-quiz h2, .dream-insights h2 {
@@ -695,8 +702,8 @@ body {
 }
 
 .dream-insights {
-    height: 50%;
-    overflow-y: scroll;
+    height: calc(100% - 50px);
+    overflow-y: hidden;
     padding: 10px;
     color: white;    
     font-weight: 100;
@@ -713,8 +720,8 @@ body {
 }
 
 .dream-quiz {
-    height: 50%;
-    overflow-y: scroll;
+    height: calc(100% - 50px);
+        overflow-y: hidden;
     padding: 10px;
     color: white;    
     font-weight: 100;
@@ -723,7 +730,7 @@ body {
     justify-content: center;
     align-items: center;
     gap: 15px;
-    border-bottom: 1px solid var(--light-green)
+    
 }
 
 .dream-quiz h2, .dream-insights h2 {
@@ -777,4 +784,93 @@ body {
     background-color: #333;
     width: 7px;
     border-radius: 5px; 
+}
+
+.dashboard-main {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:10px;
+}
+
+.dashboard-main h1 {
+    font-size: 2.5em;
+    font-family: "Fredoka", sans-serif;
+    font-weight: 200;
+    /* margin: 0px 50px; */
+    text-align: center;
+    
+    
+    animation: load-hero-text cubic-bezier(0.165, 0.84, 0.44, 1) 2.5s;
+    padding: 10px;
+}
+
+.dashboard-main h1 span {
+    font-weight: 500;
+    color: var(--light-green);
+    text-shadow: 0 0 7px var(--light-green);
+}
+.dashboard-main button {
+    background-color: transparent;
+    color: white;
+    border: 1px solid var(--light-green);
+    padding: 10px;
+    border-radius: 10px;
+    font-family: "fredoka", sans-serif;
+    font-size: 1em;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+
+.dashboard-main button:hover {
+    color: var(--light-green);
+    transition: all 0.5s;
+}
+
+.analytics-section {
+    height: 400px;
+    width: 90%;
+    max-width: 1200px;
+    background-color: #1a1a1a;
+    border-radius: 15px;
+}
+
+.saving {
+    color: #333 !important;
+    cursor: auto !important;
+}
+
+.date-picker-modal {
+    background-color: black;
+    position: absolute;
+    top: 152px;
+    left: 0;
+}
+
+.dream-tabs {
+    height: 50px;
+    background-color: var(--light-green);
+    display: flex;
+    width: 100%;
+}
+
+.dream-tabs div {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    
+}
+
+.inner-tab {
+    color: white;
+    font-weight: 100;
+    height: 100%;
+    width: 100%;
+}
+
+.inner-tab.selected {
+    background-color: #252525;
 }

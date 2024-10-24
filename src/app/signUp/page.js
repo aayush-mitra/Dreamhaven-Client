@@ -5,7 +5,8 @@ import {useSession, signIn} from 'next-auth/react'
 import {redirect, useRouter} from 'next/navigation'
 import {useEffect, useState} from 'react'
 
-export default function SignIn() {
+export default function SignUp() {
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -22,6 +23,8 @@ export default function SignIn() {
   const onChange = (e) => {
     if (e.target.name === 'email') {
       setEmail(e.target.value)
+    } else if (e.target.name === 'name') {
+      setName(e.target.value)
     } else {
       setPassword(e.target.value)
     }
@@ -30,18 +33,36 @@ export default function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')  // Clear previous error messages
-    const res = await signIn("credentials", {
-      redirect: false, // Prevent redirect
-      email,
-      password,
+    const response = await fetch(`${process.env.NEXT_PUBLIC_FETCH_URL}/api/users/`, {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify({
+        name,
+        email,
+        password
+      })
     })
 
-    if (res?.error) {
-      setError('Invalid email or password.')
+    const res1 = await response.json()
+    if (res1?.success) {
+      const res = await signIn("credentials", {
+        redirect: false, // Prevent redirect
+        email,
+        password,
+      })
+  
+      if (res?.error) {
+        setError('Invalid email or password.')
+      } else {
+        // Redirect to dashboard upon successful login
+        router.push('/dashboard')
+      }
     } else {
-      // Redirect to dashboard upon successful login
-      router.push('/dashboard')
+      setError('Error')
     }
+    
   }
 
   if (status === 'loading') {
@@ -53,7 +74,17 @@ export default function SignIn() {
       <form onSubmit={handleSubmit}>
         <div className="auth-container">
           <div className="auth-form">
-            <h1>Login</h1>
+            <h1>Register</h1>
+            <div className="input-group">
+              <label htmlFor="name">Name</label>
+              <input
+                type="text"
+                placeholder="Name"
+                name="name"
+                value={name}
+                onChange={onChange}
+              />
+            </div>
             <div className="input-group">
               <label htmlFor="email">Email</label>
               <input
@@ -75,12 +106,12 @@ export default function SignIn() {
               />
             </div>
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            <button type="submit">Login</button>
+            <button type="submit">Register</button>
           </div>
           <div className="auth-right">
             <h1>Welcome to DreamHaven.</h1>
-            <h4>Don't have an account?</h4>
-            <button onClick={() => window.location.href='/signUp'}>Sign Up</button>
+            <h4>Already have an account?</h4>
+            <button onClick={() => window.location.href = '/signIn'}>Sign In</button>
           </div>
         </div>
       </form>

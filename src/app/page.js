@@ -1,6 +1,10 @@
 import Image from "next/image";
+import Link from 'next/link'
+import {redirect} from "next/navigation";
 
 export default function Home() {
+
+
   return (
     <>
   <header className="header-main">
@@ -11,17 +15,17 @@ export default function Home() {
         </div>
         <div className="nav-links-left">
           <div className="nav-link">
-            <a href="#">Analytics</a>
+            <Link href="/about">About</Link>
           </div>
           <div className="nav-link">
-            <a href="#">Stories</a>
+            <Link href="/stories">Stories</Link>
           </div>
         </div>
       </div>
       <div className="nav-right">
         <div className="nav-links-right">
           <div className="nav-login">
-            <a href="login.html">Login</a>
+            <Link href="/signIn">Login</Link>
           </div>
         </div>
       </div>
