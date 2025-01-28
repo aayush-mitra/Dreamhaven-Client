@@ -14,7 +14,7 @@ import QualityLineChart from '../components/QualityLineChart.js'
 export default function Dashboard() {
     
     const [loading, setLoading] = useState(true)
-    const [frequency, setFrequency] = useState({})
+    const [frequency, setFrequency] = useState(null)
     const [dreamData, setDreamData] = useState(null)
     const [insight, setInsight] = useState('')
     const [loadDreamData, setLoadDreamData] = useState(true)
@@ -213,7 +213,7 @@ export default function Dashboard() {
 
     
     
-    if (status === 'loading' || loading || dreamData == null) {
+    if (status === 'loading' || loading || dreamData == null || frequency == null) {
         // loader();
         return (<div className='loader'></div>)
     }
