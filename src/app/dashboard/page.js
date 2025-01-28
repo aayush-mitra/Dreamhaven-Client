@@ -127,7 +127,7 @@ export default function Dashboard() {
         return (<div className='loader'></div>)
     }
 
-    console.log(session.user)
+    console.log(dreamData)
 
     
     return (
