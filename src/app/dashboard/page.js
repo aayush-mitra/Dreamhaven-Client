@@ -124,7 +124,6 @@ export default function Dashboard() {
             console.log(res)
             if (res.success) {
                 setDreamData(res.dreams)
-                setLoadDreamData(false)
                 let frequencies = {
                     lucidityFrequencies: {},
                     moodFrequencies: {},
@@ -213,8 +212,8 @@ export default function Dashboard() {
 
     
     
-    if (status === 'loading' || loading || dreamData == {} || !dreamData) {
-        loader();
+    if (status === 'loading' || loading) {
+        // loader();
         return (<div className='loader'></div>)
     }
 
