@@ -220,6 +220,7 @@ export default function Dashboard() {
 
     console.log('dream data')
     console.log(dreamData)
+    console.log(frequency)
 
     
     return (
