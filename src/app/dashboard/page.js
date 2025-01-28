@@ -209,11 +209,11 @@ export default function Dashboard() {
         } else {
             setLoading(false)
         }
-    }, [session?.user, dreamData])
+    }, [session?.user])
 
     
     
-    if (status === 'loading' || loading) {
+    if (status === 'loading' || loading || dreamData == {}) {
         // loader();
         return (<div className='loader'></div>)
     }
