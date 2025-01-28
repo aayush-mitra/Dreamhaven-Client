@@ -107,7 +107,7 @@ export default function Dashboard() {
 
                 const res2 = await response2.json()
                 setInsight(res2.insight)
-                
+
                 setFrequency(frequencies)
                 setLoading(false)
             } else {
@@ -126,6 +126,8 @@ export default function Dashboard() {
     if (status === 'loading' || loading) {
         return (<div className='loader'></div>)
     }
+
+    console.log(session.user)
 
     
     return (
