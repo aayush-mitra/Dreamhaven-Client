@@ -15,7 +15,7 @@ export default function Dashboard() {
     
     const [loading, setLoading] = useState(true)
     const [frequency, setFrequency] = useState({})
-    const [dreamData, setDreamData] = useState({})
+    const [dreamData, setDreamData] = useState(null)
     const [insight, setInsight] = useState('')
     const [loadDreamData, setLoadDreamData] = useState(true)
     
@@ -213,7 +213,7 @@ export default function Dashboard() {
 
     
     
-    if (status === 'loading' || loading || dreamData == {}) {
+    if (status === 'loading' || loading || dreamData == null) {
         // loader();
         return (<div className='loader'></div>)
     }
