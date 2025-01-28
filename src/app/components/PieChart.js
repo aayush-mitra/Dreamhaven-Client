@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
-const PieChart = ({ data, w, h }) => {
+const PieChart = ({ data, w, h, caption }) => {
   const svgRef = useRef();
 
   useEffect(() => {
@@ -21,13 +21,13 @@ const PieChart = ({ data, w, h }) => {
 
     const svg = d3.select(svgRef.current)
       .attr('width', width)
-      .attr('height', height)
+      .attr('height', height + 40)  // Extra space for the caption
       .append('g')
       .attr('transform', `translate(${width / 2}, ${height / 2})`);
 
-      const color = d3.scaleOrdinal()
+    const color = d3.scaleOrdinal()
       .domain(pieData.map(d => d.label))
-      .range(['#32CD32', '#ADFF2F', '#7FFF00', '#76FF03', '#BFFF00']);
+      .range(['#32CD32', '#ADFF2F', '#7FFF00', '#76FF03', '#BFFF00', '#7FFF07']);
 
     const pie = d3.pie()
       .value(d => d.value);
@@ -47,7 +47,7 @@ const PieChart = ({ data, w, h }) => {
       .attr('fill', d => color(d.data.label))
       .style("opacity", 0.7);
 
-    // Add labels
+    // Add labels to slices
     svg
       .selectAll('labels')
       .data(data_ready)
@@ -58,7 +58,18 @@ const PieChart = ({ data, w, h }) => {
       .style("text-anchor", "middle")
       .style("font-size", 12);
 
-  }, [data]); // Re-render chart when `data` changes
+    // Add caption below the pie chart
+    d3.select(svgRef.current)
+      .append('text')
+      .attr('x', width / 2)
+      .attr('y', height + 30)  // Position below the chart
+      .attr('text-anchor', 'middle')
+      .style('font-size', '18px')
+      .style('font-weight', 'lighter')
+      .style('fill', 'white' )
+      .text(caption);
+
+  }, [data, w, h, caption]); // Re-render chart when `data`, `w`, `h`, or `caption` changes
 
   return (
     <svg ref={svgRef}></svg>
