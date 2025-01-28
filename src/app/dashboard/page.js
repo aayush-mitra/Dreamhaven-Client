@@ -17,6 +17,7 @@ export default function Dashboard() {
     const [frequency, setFrequency] = useState({})
     const [dreamData, setDreamData] = useState({})
     const [insight, setInsight] = useState('')
+    const [loadDreamData, setLoadDreamData] = useState(true)
     
     const {data: session, status} = useSession({
         required: true,
@@ -27,6 +28,94 @@ export default function Dashboard() {
         
     })
 
+    const loader = async () => {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_FETCH_URL}/api/users/all_dreams?userId=${session.user._id}`)
+        const res = await response.json();
+        console.log(res)
+        if (res.success) {
+            setDreamData(res.dreams)
+            setLoadDreamData(false)
+            let frequencies = {
+                lucidityFrequencies: {},
+                moodFrequencies: {},
+                vividnessFrequencies: {},
+                charactersFrequencies: {},
+                locationFrequencies: {},
+                themesFrequencies: {},
+                repetitionFrequencies: {}
+            }
+            res.dreams.forEach(dream => {
+                const lucidity = dream.lucidity || "No recollection"; // Handle empty/undefined lucidity
+                if (frequencies.lucidityFrequencies[lucidity]) {
+                    frequencies.lucidityFrequencies[lucidity]++;
+                } else {
+                    frequencies.lucidityFrequencies[lucidity] = 1;
+                }
+
+                const mood = dream.mood || "No recollection"; // Handle empty/undefined mood
+                if (frequencies.moodFrequencies[mood]) {
+                    frequencies.moodFrequencies[mood]++;
+                } else {
+                    frequencies.moodFrequencies[mood] = 1;
+                }
+
+                const vividness = dream.vividness || "No recollection"; // Handle empty/undefined vividness
+                if (frequencies.vividnessFrequencies[vividness]) {
+                    frequencies.vividnessFrequencies[vividness]++;
+                } else {
+                    frequencies.vividnessFrequencies[vividness] = 1;
+                }
+
+                const characters = dream.characters || "No recollection"; // Handle empty/undefined characters
+                if (frequencies.charactersFrequencies[characters]) {
+                    frequencies.charactersFrequencies[characters]++;
+                } else {
+                    frequencies.charactersFrequencies[characters] = 1;
+                }
+
+                const location = dream.location || "No recollection"; // Handle empty/undefined location
+                if (frequencies.locationFrequencies[location]) {
+                    frequencies.locationFrequencies[location]++;
+                } else {
+                    frequencies.locationFrequencies[location] = 1;
+                }
+
+                const themes = dream.themes || "No recollection"; // Handle empty/undefined themes
+                if (frequencies.themesFrequencies[themes]) {
+                    frequencies.themesFrequencies[themes]++;
+                } else {
+                    frequencies.themesFrequencies[themes] = 1;
+                }
+
+                const repetition = dream.repetition || "No recollection"; // Handle empty/undefined repetition
+                if (frequencies.repetitionFrequencies[repetition]) {
+                    frequencies.repetitionFrequencies[repetition]++;
+                } else {
+                    frequencies.repetitionFrequencies[repetition] = 1;
+                }
+            });
+            // console.log(frequencies)
+            const response2 = await fetch(`${process.env.NEXT_PUBLIC_PYTHON}/overall`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({
+                    dreams: res.dreams
+                })
+            })
+
+            const res2 = await response2.json()
+            setInsight(res2.insight)
+
+            setFrequency(frequencies)
+            setLoading(false)
+        } else {
+            
+        }
+        
+    }
+
     useEffect(() => {
         if (session?.user) {
         async function f() {
@@ -35,6 +124,7 @@ export default function Dashboard() {
             console.log(res)
             if (res.success) {
                 setDreamData(res.dreams)
+                setLoadDreamData(false)
                 let frequencies = {
                     lucidityFrequencies: {},
                     moodFrequencies: {},
@@ -119,11 +209,12 @@ export default function Dashboard() {
         } else {
             setLoading(false)
         }
-    }, [session?.user])
+    }, [session?.user, dreamData])
 
     
     
-    if (status === 'loading' || loading) {
+    if (status === 'loading' || loading || dreamData == {} || !dreamData) {
+        loader();
         return (<div className='loader'></div>)
     }
 
