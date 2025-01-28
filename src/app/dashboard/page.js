@@ -168,7 +168,7 @@ export default function Dashboard() {
     </header>
     <div className='dashboard-main'>
         {
-            !frequency ? null : (<>
+            !frequency ? 'fdfdfs' : (<>
 <h1>Hello <span>{session?.user?.name}!</span></h1>
         <button onClick={() => {
             window.location.href = `/dreams/${(new Date()).toISOString().split('T')[0]}`
