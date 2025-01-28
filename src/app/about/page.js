@@ -1,4 +1,4 @@
-
+'use client'
 import {redirect} from 'next/navigation'
 import { signIn } from "next-auth/react"
 import Link from 'next/link'
