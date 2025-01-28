@@ -832,8 +832,13 @@ body {
     height: 400px;
     width: 90%;
     max-width: 1200px;
-    background-color: #1a1a1a;
+    background-color: #15151f;
     border-radius: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    align-items: center;
 }
 
 .saving {
@@ -1070,6 +1075,7 @@ body {
     width: 60%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
     gap: 20px;
 }
 

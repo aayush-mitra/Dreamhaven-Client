@@ -7,12 +7,16 @@ import Link from 'next/link'
 import {useState, useEffect} from 'react'
 
 import PieChart from '../components/PieChart.js'
+import LineChart from '../components/LineChart.js'
+import QualityLineChart from '../components/QualityLineChart.js'
 
 
 export default function Dashboard() {
     
     const [loading, setLoading] = useState(true)
     const [frequency, setFrequency] = useState({})
+    const [dreamData, setDreamData] = useState({})
+    const [insight, setInsight] = useState('')
     
     const {data: session, status} = useSession({
         required: true,
@@ -30,6 +34,7 @@ export default function Dashboard() {
             const res = await response.json();
             console.log(res)
             if (res.success) {
+                setDreamData(res.dreams)
                 let frequencies = {
                     lucidityFrequencies: {},
                     moodFrequencies: {},
@@ -90,7 +95,19 @@ export default function Dashboard() {
                     }
                 });
                 // console.log(frequencies)
+                const response2 = await fetch(`${process.env.NEXT_PUBLIC_PYTHON}/overall`, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    method: "POST",
+                    body: JSON.stringify({
+                        dreams: res.dreams
+                    })
+                })
 
+                const res2 = await response2.json()
+                setInsight(res2.insight)
+                
                 setFrequency(frequencies)
                 setLoading(false)
             } else {
@@ -99,8 +116,12 @@ export default function Dashboard() {
             
         }
         f();
+        } else {
+            setLoading(false)
         }
     }, [session?.user])
+
+    
     
     if (status === 'loading' || loading) {
         return (<div className='loader'></div>)
@@ -144,13 +165,41 @@ export default function Dashboard() {
         </div>
     </header>
     <div className='dashboard-main'>
-        <h1>Hello <span>{session?.user?.name}!</span></h1>
+        {
+            !frequency ? null : (<>
+<h1>Hello <span>{session?.user?.name}!</span></h1>
         <button onClick={() => {
             window.location.href = `/dreams/${(new Date()).toISOString().split('T')[0]}`
         }}>Today's Dream</button>
-        <div className='analytics-section'>
-            <PieChart w={300} h={300} data={frequency.lucidityFrequencies} />
+        <div className="analytics-section" style={{'flexDirection': 'column'}}>
+            <h1>AI Insight</h1>
+            <p style={{'padding': '10px 50px', 'fontWeight': 'lighter', 'textAlign': 'center'}}>{insight}</p>
         </div>
+        <div className='analytics-section'>
+        {dreamData.length > 0 ? <QualityLineChart w={800} h={320} data={dreamData} /> : null}
+        </div>
+        <div className='analytics-section'>
+        {dreamData.length > 0 ? <LineChart w={800} h={320} data={dreamData} /> : null}
+        </div>
+        <div className='analytics-section'>
+            
+            <PieChart w={300} h={300} caption={'Themes'} data={frequency.themesFrequencies} />
+            <PieChart w={300} h={300} caption={'Recurrence'} data={frequency.repetitionFrequencies} />
+
+        </div>
+        <div className='analytics-section'>
+            <PieChart w={300} h={300} caption={'Lucidity'} data={frequency.lucidityFrequencies} />
+            <PieChart w={300} h={300} caption={'Mood'} data={frequency.moodFrequencies} />
+            <PieChart w={300} h={300} caption={'Vividness'} data={frequency.vividnessFrequencies} />
+        </div>
+        <div className='analytics-section'>
+            <PieChart w={300} h={300} caption={'Characters'} data={frequency.charactersFrequencies} />
+            <PieChart w={300} h={300} caption={'Location'} data={frequency.locationFrequencies} />
+            
+        </div></>
+            )
+        }
+        
     </div>
         </>
     )
