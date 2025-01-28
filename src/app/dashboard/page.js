@@ -121,7 +121,7 @@ export default function Dashboard() {
         async function f() {
             const response = await fetch(`${process.env.NEXT_PUBLIC_FETCH_URL}/api/users/all_dreams?userId=${session.user._id}`)
             const res = await response.json();
-            console.log(res)
+            console.log("res" + res)
             if (res.success) {
                 setDreamData(res.dreams)
                 let frequencies = {
